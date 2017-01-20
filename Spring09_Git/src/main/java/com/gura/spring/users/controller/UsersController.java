@@ -3,6 +3,7 @@ package com.gura.spring.users.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -21,6 +22,15 @@ public class UsersController {
 
 	@Autowired
 	private UsersService usersService;
+	
+	// "users/signin_form.do" 로그인 폼 요청 처리
+	@RequestMapping("/users/signin_form")
+	public String signin_form(HttpSession session){
+		//세션 초기화
+		session.invalidate();
+		//뷰페이지로 forward 이동
+		return "users/signin_form";
+	}
 	
 	// "/users/signup.do" 요청처리
 	@RequestMapping("/users/signup")
