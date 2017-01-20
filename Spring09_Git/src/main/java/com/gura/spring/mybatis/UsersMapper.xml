@@ -8,6 +8,10 @@
 		INSERT INTO users (id, pwd, email, regdate) 
 		VALUES(#{id}, #{pwd}, #{email}, SYSDATE)
 	</insert>
+	<select id="isValid" parameterType="usersDto" resultType="usersDto">
+		SELECT id,pwd FROM users 
+		WHERE id=#{id} AND pwd=#{pwd}
+	</select>
 </mapper>
 
 

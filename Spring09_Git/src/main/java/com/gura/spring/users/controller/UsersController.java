@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +21,29 @@ public class UsersController {
 
 	@Autowired
 	private UsersService usersService;
+	
+	// "/users/signin.do" 로그인 요청 처리
+	@RequestMapping("/users/signin")
+	public ModelAndView signin(HttpSession session, @ModelAttribute UsersDto dto,@RequestParam String uri){
+		//아이디 비밀번호가 유효한지 여부를 확인 한다.
+		boolean isValid=usersService.isValid(dto);
+		ModelAndView mView=new ModelAndView();
+		if(isValid){//아이디 비번이 맞으면
+			//로그인 처리를 해준다.
+			session.setAttribute("id", dto.getId());
+			mView.addObject("msg", dto.getId()+"님이 로그인 되었습니다.");
+			mView.addObject("redirectUri", uri);
+		}else{
+			//아이디 혹은 비밀번호가 틀리다는 정보를 응답한다.
+			mView.addObject("msg", "아이디 혹은 비밀번호가 틀려요");
+			String location=session.getServletContext().getContextPath()+
+					"/users/signin_form.do?uri="+uri;
+			mView.addObject("redirectUri", location);
+		}
+		// alert창으로 보낸다.
+		mView.setViewName("users/alert");
+		return mView;
+	}
 	
 	// "users/signin_form.do" 로그인 폼 요청 처리
 	@RequestMapping("/users/signin_form")
