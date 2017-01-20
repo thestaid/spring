@@ -4,6 +4,10 @@
 	<select id="isExistId" parameterType="String" resultType="String">
 		SELECT id FROM users WHERE id=#{id}
 	</select>
+	<insert id="insert" parameterType="usersDto">
+		INSERT INTO users (id, pwd, email, regdate) 
+		VALUES(#{id}, #{pwd}, #{email}, SYSDATE)
+	</insert>
 </mapper>
 
 
