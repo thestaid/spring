@@ -22,6 +22,18 @@ public class UsersController {
 	@Autowired
 	private UsersService usersService;
 	
+	// "/users/signout.do" 요청 처리
+	@RequestMapping("/users/signout")
+	public ModelAndView signout(HttpSession session){
+		//세션 초기화
+		session.invalidate();
+		ModelAndView mView=new ModelAndView();
+		mView.addObject("msg", "로그 아웃 되었습니다.");
+		mView.addObject("redirectUri", session.getServletContext().getContextPath());
+		mView.setViewName("users/alert");
+		return mView;
+	}
+	
 	// "/users/signin.do" 로그인 요청 처리
 	@RequestMapping("/users/signin")
 	public ModelAndView signin(HttpSession session, @ModelAttribute UsersDto dto,@RequestParam String uri){
