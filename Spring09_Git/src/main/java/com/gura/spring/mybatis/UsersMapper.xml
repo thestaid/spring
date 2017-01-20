@@ -23,7 +23,10 @@
 	</select>
 	<update id="update" parameterType="usersDto">
 		UPDATE users SET pwd=#{pwd}, email=#{email} WHERE id=#{id}
-	</update>	
+	</update>
+	<delete id="delete" parameterType="String">
+		DELETE FROM users WHERE id=#{id}
+	</delete>	
 </mapper>
 
 
