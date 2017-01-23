@@ -8,23 +8,37 @@
 	<select id="getList" resultType="cafeDto" parameterType="cafeDto">
 		SELECT *
 		FROM
-			(SELECT result1.*, ROWNUM rnum		
-			FROM (SELECT <include refid="cafeColumns"/>
+			(SELECT result1.*, ROWNUM rnum
+			 FROM 	(SELECT <include refid="cafeColumns"/>
 					FROM board_cafe
-					ORDER BY num DESC) result1)
-		WHERE <![CDATA[ rnum >= #{startRowNum} AND rnum <= #{endRowNum} ]]>
-	</select>
+					<where>
+					  	<if test="writer != null">
+					  		OR writer LIKE '%'||#{writer}||'%'
+					  	</if>
+					  	<if test="title != null">
+					  		OR title LIKE '%'||#{title}||'%'
+					  	</if>
+					  	<if test="content != null">
+					  		OR content LIKE '%'||#{content}||'%'
+					  	</if>
+				  	</where>
+					ORDER BY num DESC) result1
+			)
+		WHERE 
+		<![CDATA[ rnum >= #{startRowNum} AND rnum <= #{endRowNum} ]]>
+	</select>	
 	<insert id="insert" parameterType="cafeDto">
 		INSERT INTO board_cafe
 		(num, writer, title, content, viewCount, regdate)
 		VALUES(board_cafe_seq.NEXTVAL, 
-		#{writer}, #{title}, #{content}, #{viewCount}, SYSDATE)	
-	</insert>
+		#{writer}, #{title}, #{content}, #{viewCount}, SYSDATE)
+	</insert>	
 	<select id="getData" parameterType="int" resultType="cafeDto">
 		SELECT <include refid="cafeColumns"/>
 		FROM board_cafe
 		WHERE num=#{num}
 	</select>
+	
 	<update id="increaseViewCount" parameterType="int">
 		UPDATE board_cafe
 		SET viewCount = viewCount+1
@@ -35,14 +49,21 @@
 		WHERE num=#{num}
 	</delete>
 	<update id="update" parameterType="cafeDto">
-		UPDATE board_cafe SET 
-		title=#{title}, content=#{content} 
+		UPDATE board_cafe
+		SET title=#{title}, content=#{content}
 		WHERE num=#{num}
-	</update>
+	</update>	
+	
 	<select id="getCount" resultType="int">
-		SELECT NVL(MAX(ROWNUM),0) FROM board_cafe
-	</select>
+		SELECT NVL(MAX(ROWNUM), 0)
+		FROM board_cafe
+	</select>	
 </mapper>
+
+
+
+
+
 
 
 
