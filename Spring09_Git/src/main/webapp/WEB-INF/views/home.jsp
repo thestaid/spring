@@ -23,6 +23,9 @@
 		</div>
 	</c:otherwise>
 </c:choose>
+<ul>
+	<li><a href="cafe/list.do">카페 글 목록 보기</a></li>
+</ul>
 </body>
 </html>
 
