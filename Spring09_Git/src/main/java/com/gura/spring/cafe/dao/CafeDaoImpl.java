@@ -50,8 +50,8 @@ public class CafeDaoImpl implements CafeDao{
 	}
 	//전체 글 갯수를 리턴해주는 메소드
 	@Override
-	public int getCount() {
-		int count=session.selectOne("cafe.getCount");
+	public int getCount(CafeDto dto) {
+		int count=session.selectOne("cafe.getCount", dto);
 		return count;
 	}
 

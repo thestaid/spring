@@ -48,7 +48,7 @@ public class CafeServiceImpl implements CafeService{
 		//보여줄 페이지 데이터의 끝 ResultSet row 번호
 		int endRowNum=pageNum*PAGE_ROW_COUNT;
 		//전체 row 의 갯수를 DB 에서 얻어온다.
-		int totalRow = cafeDao.getCount();
+		int totalRow = cafeDao.getCount(dto);
 		//전체 페이지의 갯수 구하기
 		int totalPageCount=
 				(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);

@@ -11,5 +11,5 @@ public interface CafeDao {
 	public void increaseViewCount(int num);
 	public void update(CafeDto dto);
 	public void delete(int num);
-	public int getCount();
+	public int getCount(CafeDto dto);
 }
