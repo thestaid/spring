@@ -15,8 +15,8 @@ public class CafeDaoImpl implements CafeDao{
 	private SqlSession session;
 	
 	@Override
-	public List<CafeDto> getList() {
-		List<CafeDto> list=session.selectList("cafe.getList");
+	public List<CafeDto> getList(CafeDto dto) {
+		List<CafeDto> list=session.selectList("cafe.getList", dto);
 		return list;
 	}
 
@@ -47,6 +47,12 @@ public class CafeDaoImpl implements CafeDao{
 	public void delete(int num) {
 		session.delete("cafe.delete", num);
 		
+	}
+	//전체 글 갯수를 리턴해주는 메소드
+	@Override
+	public int getCount() {
+		int count=session.selectOne("cafe.getCount");
+		return count;
 	}
 
 }
