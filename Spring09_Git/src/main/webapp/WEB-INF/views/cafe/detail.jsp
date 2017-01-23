@@ -30,4 +30,12 @@
 </table>
 <div class="content">${dto.content }</div>
 </body>
+<script>
+	function deleteCheck(){
+		var isDelete=confirm("삭제 하시겠습니까?");
+		if(isDelete){
+			location.href="private/delete.do?num=${dto.num}";
+		}
+	}
+</script>
 </html>
