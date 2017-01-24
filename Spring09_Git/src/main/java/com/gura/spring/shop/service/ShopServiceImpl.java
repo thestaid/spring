@@ -14,7 +14,7 @@ public class ShopServiceImpl implements ShopService{
 	//입금 작업 메소드
 	@Override
 	public void deposit(String id, int money) {
-		// TODO Auto-generated method stub
+		shopDao.deposit(id, money);
 		
 	}
 	
@@ -24,5 +24,6 @@ public class ShopServiceImpl implements ShopService{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

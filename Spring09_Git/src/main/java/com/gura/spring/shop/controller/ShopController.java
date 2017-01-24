@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring.shop.service.ShopService;
@@ -30,5 +31,18 @@ public class ShopController {
 		mView.setViewName("shop/index");
 		//리턴
 		return mView;
+	}
+	
+	@RequestMapping("/shop/depositform")
+	public String depositForm(){
+		
+		return "shop/depositform";
+	}
+	
+	@RequestMapping("/shop/deposit")
+	public String deposit(@RequestParam String id, @RequestParam int cash){
+		//shopService 객체를 이용해서 입금 작업을 한다.
+		shopService.deposit(id, cash);
+		return "redirect:/shop/index.do";
 	}
 }
