@@ -31,11 +31,24 @@ public class UsersServiceImpl implements UsersService{
 
 	@Override
 	public boolean isValid(UsersDto dto) {
-		return usersDao.isValid(dto);
+		//아이디가 유효한지 여부
+		boolean isValid=false;
+		//아이디에 해당되는 DB에 저장된 암호화된 비밀번호를 읽어온다.
+		String password=usersDao.getPassword(dto.getId());
+		if(password!=null){//아이디가 존재하는 경우
+			//.matches(사용자가 입력한 비밀번호, DB에 저장된 암호화 비밀번호를 
+			//이용해서 비밀번호가 맞는지 여부를 boolean type으로 리턴받기)
+			pEncoder.matches(dto.getPwd(), password);
+		}
+		return isValid;
 	}
 
 	@Override
 	public void update(UsersDto dto) {
+		//암포화된 비밀번호를 얻어낸다.
+		String encodePwd=pEncoder.encode(dto.getPwd());
+		//Dto  객체에 다시 넣어준다.
+		dto.setPwd(encodePwd);		
 		usersDao.update(dto);
 	}
 
