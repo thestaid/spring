@@ -72,6 +72,8 @@
 	<context:component-scan base-package="com.gura.spring.shop.*" />
 	
    <!-- Spring Transaction Manager 설정 -->
+   <!-- 아래의 내용은 txManager = new DataSourceTransactionManager -->
+   <!-- <beans:property name="dataSource" ref="dataSource"/> = txManger.serDataSource(); -->
 	<beans:bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<beans:property name="dataSource" ref="dataSource"/>
@@ -80,10 +82,20 @@
 	<!-- 어노테이션으로 트렌젝션을 적용할 위치를 지정할수 있도록 -->
 	<tx:annotation-driven transaction-manager="txManager"/>
 	
+	
+	<!-- 
+		@Transactional의 범위에서
+		org.springframework.dao.DataAccessException가 발생하면
+		/views/error/sqlError.jsp로 이동한다.
+		
+	 -->
 	<!-- 트렌젝션 블럭에서 발생한 에러 핸들링 -->
 	<beans:bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<beans:property name="exceptionMappings">
 			<beans:props>
+				<beans:prop key="com.gura.spring.shop.dao.OopsException">
+					error/oopsError
+				</beans:prop>
 				<beans:prop key="org.springframework.dao.DataAccessException">
 					error/sqlError
 				</beans:prop>
