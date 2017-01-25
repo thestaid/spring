@@ -20,7 +20,8 @@ public class LoginAspect {
 	//"execution(* com.gura.spring.cafe.controller.CafeController.auth*(..))" : 위의 내용 세분화
 	//다른 것도 나열 하려면 ||문자로 해서 나열 가능
 	@Around("execution(* com.gura.spring.users.controller.UsersController.auth*(..)) "
-			+ "|| execution(* com.gura.spring.cafe.controller.CafeController.auth*(..))")
+			+ "|| execution(* com.gura.spring.cafe.controller.CafeController.auth*(..)) "
+			+ "|| execution(* com.gura.spring.shop.controller.ShopController.auth*(..))")
 	public Object loginCheck(ProceedingJoinPoint joinPoint)
 		throws Throwable{
 		//컨트롤러에 aop를 적용 했을때 HttpServletRequest 참조값 얻어오기

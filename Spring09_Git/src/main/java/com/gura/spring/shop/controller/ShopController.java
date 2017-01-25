@@ -34,16 +34,16 @@ public class ShopController {
 	}
 	
 	@RequestMapping("/shop/depositform")
-	public String depositForm(){
+	public ModelAndView authdepositForm(){
 		
-		return "shop/depositform";
+		return new ModelAndView("shop/depositform");
 	}
 	
 	@RequestMapping("/shop/deposit")
-	public String deposit(@RequestParam String id, @RequestParam int cash){
+	public ModelAndView authdeposit(@RequestParam String id, @RequestParam int cash){
 		//shopService 객체를 이용해서 입금 작업을 한다.
 		shopService.deposit(id, cash);
-		return "redirect:/shop/index.do";
+		return new ModelAndView("redirect:/shop/index.do");
 	}
 	
 	//상품 목록 보기 요청 처리
@@ -55,7 +55,7 @@ public class ShopController {
 	
 	//상품 구입 요청 처리
 	@RequestMapping("/shop/buy")
-	public ModelAndView buy(@RequestParam String id, @RequestParam int price){
+	public ModelAndView authbuy(@RequestParam String id, @RequestParam int price){
 		//서비스 객체를 이용해서 상품 구입 처리하기
 		shopService.buy(id, price);
 		ModelAndView mView=new ModelAndView();
